@@ -9,9 +9,9 @@ To install the library, in `build.dependencies.gradle` add:
    dependencyResolutionManagement {
 		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
 		    repositories {
-			    mavenCentral()
-			    jcenter()
-                maven { url "https://jitpack.io" }
+			mavenCentral()
+			jcenter()
+            maven { url "https://jitpack.io" }
 		}
 	}
    dependencies {
