@@ -1,4 +1,4 @@
-package com.hydraulichydras.hydralib;
+package com.hydraulichydras.hydralib.Util;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
