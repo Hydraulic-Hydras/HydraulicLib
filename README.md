@@ -1,4 +1,4 @@
-![alt text](https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/9384-logo.png) 
+![alt text](https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/9384-logo.png)
 ## Hydraulic Lib
 HydraulicLib is a library designed to improve the initial programming experience for new members as 
 well as greatly enhance the efficiency of code for veterans.
@@ -21,6 +21,14 @@ To install the library, in `build.dependencies.gradle` add:
    ```  
 Replacing `VERSION` with the latest release
 
-## Util
-Util contains the basic class (Contraption) that can be applied to your hardware class to
-extend it and implement simple 'init' and 'loop' methods.
+## Welcome
+Welcome to Hydraulic Lib
+
+It is thrilling to have you here! Whether you're an experienced developer or just starting out, 
+this open-source project is a collaborative space where innovation thrives. Dive into our codebase, 
+explore our documentation, and join our vibrant community of contributors from around the globe.
+
+Feel free to raise issues, submit pull requests, or share your ideas. Together, 
+let's build something remarkable and make a positive impact in the world of software development.
+
+Happy coding! 
