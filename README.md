@@ -6,7 +6,8 @@
 HydraulicLib is a library designed to improve the initial programming experience for new members as 
 well as greatly enhance the efficiency of code for veterans.
 
-To install the library, in `build.dependencies.gradle` add:
+
+To install the library, in `settings.gradle` add:
 </br>
 
    ```gradle
@@ -14,13 +15,22 @@ To install the library, in `build.dependencies.gradle` add:
 		 repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
 		    repositories {
 			mavenCentral()
-			jcenter()
                    maven { url "https://jitpack.io" }
 		}
 	}
-   dependencies {
-         implementation 'com.github.Tea505:HydraulicLib:VERSION'
+   ```  
+
+Then in `build.dependencies.gradle` add:
+</br>
+
+   ```gradle
+   repositories { 
+        jcenter()
+        maven { url "https://jitpack.io" }
    }
+   dependencies {
+        implementation 'com.github.Tea505:HydraulicLib:VERSION'
+    }
    ```  
 Replacing `VERSION` with the latest release
 
