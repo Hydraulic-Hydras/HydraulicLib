@@ -26,6 +26,7 @@ Then in `build.dependencies.gradle` add:
    ```gradle
    repositories { 
         jcenter()
+        mavenCentral()
         maven { url "https://jitpack.io" }
    }
    dependencies {
