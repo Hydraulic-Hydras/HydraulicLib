@@ -1,5 +1,3 @@
-![alt text](https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/Hydraulic%20Hydras.png)
-
 <p align="center">
   <img src="https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/Hydraulic%20Hydras.png">
 </p>
