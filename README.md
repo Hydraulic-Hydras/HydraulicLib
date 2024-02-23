@@ -6,7 +6,7 @@
 HydraulicLib is a library designed to improve the initial programming experience for new members as 
 well as greatly enhance the efficiency of code for veterans.
 
-To install the library, in `build.dependencies.gradle` add:
+1. To install the library, in `build.dependencies.gradle` add:
 </br>
 
    ```gradle
@@ -22,7 +22,7 @@ To install the library, in `build.dependencies.gradle` add:
          implementation 'com.github.Tea505:HydraulicLib:VERSION'
    }
    ```  
-Replacing `VERSION` with the latest release
+2. Replacing `VERSION` with the latest release
 
 ## Welcome
 Welcome to Hydraulic Lib
