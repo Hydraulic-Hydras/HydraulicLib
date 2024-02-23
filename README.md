@@ -1,3 +1,4 @@
+        ![alt text](https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/9384-logo.png) 
 ## Hydraulic Lib
 HydraulicLib is a library designed to improve the initial programming experience for new members as 
 well as greatly enhance the efficiency of code for veterans.
