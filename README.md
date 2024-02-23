@@ -1,4 +1,3 @@
-![alt text](https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/9384-logo.png)
 ![alt text](https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/Hydraulic%20Hydras.png)
 ## Hydraulic Lib
 HydraulicLib is a library designed to improve the initial programming experience for new members as 
