@@ -11,7 +11,7 @@ To install the library, in `build.dependencies.gradle` add:
 		    repositories {
 		    mavenCentral()
 		    jcenter()
-    maven { url "https://jitpack.io" }
+    			maven { url "https://jitpack.io" }
 		}
 	}
    dependencies {
