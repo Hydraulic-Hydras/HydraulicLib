@@ -20,10 +20,6 @@ To install the library, in `build.dependencies.gradle` add:
    ```  
 Replacing `VERSION` with the latest release
 
-## How does it work?
-
-The library contains of many classes including kinematics, MathUtils, Command sequences and Motion.
-
 ## Util
 Util contains the basic class (Contraption) that can be applied to your hardware class to
 extend it and implement simple 'init' and 'loop' methods.
