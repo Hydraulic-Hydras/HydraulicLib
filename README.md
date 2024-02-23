@@ -11,7 +11,7 @@ To install the library, in `build.dependencies.gradle` add:
 
    ```gradle
    dependencyResolutionManagement {
-		repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
+		 repositoriesMode.set(RepositoriesMode.PREFER_PROJECT)
 		    repositories {
 			mavenCentral()
 			jcenter()
