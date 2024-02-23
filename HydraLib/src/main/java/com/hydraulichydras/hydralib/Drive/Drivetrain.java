@@ -8,6 +8,7 @@ import com.hydraulichydras.hydralib.Geometry.Pose;
 public interface Drivetrain {
     /**
      * This method specifies a way to set the pose for your drivetrain system
+     * <p>
      * @param pose
      */
     void set(Pose pose);

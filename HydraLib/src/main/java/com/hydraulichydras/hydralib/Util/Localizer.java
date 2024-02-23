@@ -18,6 +18,7 @@ public interface Localizer {
 
     /**
      * Sets the pose
+     * <p>
      * @param pose
      */
     void setPos(Pose pose);
