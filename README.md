@@ -28,10 +28,9 @@ Replacing `VERSION` with the latest release
 Welcome to Hydraulic Lib
 
 It is thrilling to have you here! Whether you're an experienced developer or just starting out, 
-this open-source project is a collaborative space where innovation thrives. Dive into our codebase, 
-explore our documentation, and join our vibrant community of contributors from around the globe.
+I hope that this project accompanies and helps you throughout your journey.
 
-Feel free to raise issues, submit pull requests, or share your ideas. Together, 
-let's build something remarkable and make a positive impact in the world of software development.
+Feel free to raise issues, submit pull requests, share ideas or hit me up on discord.
+Username: tea7003
 
 Happy coding! 
