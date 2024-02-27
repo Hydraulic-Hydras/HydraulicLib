@@ -10,19 +10,21 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * Contraption serves as an abstract blueprint encompassing shared methods and/or instance variables
  * applicable to every contraption on a robot.
  * <p>
- * Any robotic contraption, inclusive of the primary hardware map, is expected to inherit from this abstract class.
+ * Any robotic contraption, inclusive of the primary hardware map, is expected to inherit from this
+ * abstract class and put into your "Robot" class.
  */
 public abstract class HydraContraption {
+
     /**
      * OpMode circumstance for a Contraption class.
      */
-
     protected LinearOpMode opMode;
+
     /**
      * Telemetry circumstance for a Contraption class.
      */
-
     protected Telemetry telemetry;
+
     /**
      * Initiates the robot's hardware by obtaining and storing references to the robot configuration.
      * It also establishes the initial positions for motors and servos.
