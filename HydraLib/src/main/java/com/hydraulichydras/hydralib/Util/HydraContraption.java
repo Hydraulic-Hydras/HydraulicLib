@@ -12,7 +12,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * <p>
  * Any robotic contraption, inclusive of the primary hardware map, is expected to inherit from this abstract class.
  */
-public abstract class Contraption {
+public abstract class HydraContraption {
     /**
      * OpMode circumstance for a Contraption class.
      */
