@@ -1,4 +1,4 @@
-package com.hydraulichydras.hydralib.Drive;
+package com.hydraulichydras.hydralib;
 
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;

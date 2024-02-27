@@ -1,4 +1,4 @@
-package com.hydraulichydras.hydralib.Geometry;
+package com.hydraulichydras.hydralib;
 
 /**
  * A Point class is a fundamental component used to represent a point in a two-dimensional or three-dimensional space.
