@@ -6,8 +6,16 @@ import com.qualcomm.robotcore.hardware.Gamepad;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
+/**
+ * Represents a Mecanum drivetrain with four motors configured in a H-drive configuration.
+ * This class provides methods for controlling the drivetrain's movement and accessing telemetry data.
+ * It allows for setting motor power, direction, and provides telemetry feedback of motor index values.
+ */
 public class HydraMecanumDrivetrain {
 
+    /**
+     * DcMotor array for Drivetrain Class.
+     */
     public DcMotor[] motors;
 
     /**
