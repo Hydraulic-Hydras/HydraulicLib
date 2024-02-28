@@ -8,6 +8,7 @@ package com.hydraulichydras.hydralib;
  * <p>
  * I have it limited to x, y, as the z coordinate would be considered heading in the Pose class
  */
+
 public class HydraPoint {
 
 

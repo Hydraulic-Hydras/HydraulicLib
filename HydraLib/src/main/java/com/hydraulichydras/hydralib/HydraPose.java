@@ -6,7 +6,8 @@ package com.hydraulichydras.hydralib;
  *  <p></p>
  *  The Pose class inherits properties and behaviors from the more general Point class.
  */
-public class HydraPose extends HydraPoint {
+
+public class HydraPose {
 
 
 }
