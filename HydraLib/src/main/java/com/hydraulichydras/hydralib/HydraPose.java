@@ -10,53 +10,69 @@ import java.util.Locale;
  */
 
 public class HydraPose {
+
+    // Position coordinates
     public double x;
     public double y;
+    // Heading angle (in radians)
     public double heading;
 
+    // Default constructor initializes the pose to origin (0, 0) with zero heading
     public HydraPose() {
         this(0.0, 0.0, 0.0);
     }
+
+    // Constructor to initialize pose with specified coordinates and heading
     public HydraPose(double x, double y, double heading) {
         this.x = x;
         this.y = y;
+        // Normalize heading angle
         this.heading = AngleUnit.normalizeRadians(heading);
     }
 
+    // Constructor to initialize pose with a vector and heading
     public HydraPose(HydraVector2d vector, double heading) {
         this(vector.x, vector.y, heading);
     }
 
+    // Set the pose to the values of another pose
     public void set(HydraPose pose) {
         this.x = pose.x;
         this.y = pose.y;
         this.heading = pose.heading;
     }
 
+    // Constructor to initialize pose with specified coordinates and zero heading
     public HydraPose(double x, double y) {
         this(x, y, 0.0);
     }
 
+    // Method to add another pose to this pose
     public HydraPose add(HydraPose other) {
         return new HydraPose(x + other.x, y + other.y, heading + other.heading);
     }
 
+    // Method to subtract another pose from this pose
     public HydraPose subtract(HydraPose other) {
         return new HydraPose(x - other.x, y - other.y,  AngleUnit.normalizeRadians(heading - other.heading));
     }
 
+    // Method to divide this pose by another pose
     public HydraPose divide(HydraPose other) {
         return new HydraPose(this.x / other.x, this.y / other.y, this.heading / other.heading);
     }
 
+    // Method to compute the difference between this pose and another pose
     public HydraPose subt(HydraPose other) {
         return new HydraPose(x - other.x, y - other.y, heading - other.heading);
     }
 
+    // Convert the pose to a 2D vector
     public HydraVector2d toVector2d() {
         return new HydraVector2d(x, y);
     }
 
+    // Override equals method to compare poses for equality
     @Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -69,8 +85,10 @@ public class HydraPose {
         return false;
     }
 
+    // Override toString method to provide a string representation of the pose
     @Override
     public String toString() {
+        // Format the pose as a string with two decimal places for position coordinates and three decimal places for heading
         return String.format(Locale.ENGLISH, "%.2f %.2f %.3f", x, y, heading);
     }
 }
