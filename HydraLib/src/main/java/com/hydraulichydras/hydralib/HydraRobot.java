@@ -17,12 +17,12 @@ public class HydraRobot {
     /**
      * HardwareMap circumstance for a Robot class.
      */
-    public HardwareMap hardwareMap;
+    protected HardwareMap hardwareMap;
 
     /**
      * Telemetry circumstance for a Robot class.
      */
-    public Telemetry telemetry;
+    protected Telemetry telemetry;
 
     public HydraRobot(HardwareMap hardwareMap, Telemetry telemetry) {
         this.hardwareMap = hardwareMap;
