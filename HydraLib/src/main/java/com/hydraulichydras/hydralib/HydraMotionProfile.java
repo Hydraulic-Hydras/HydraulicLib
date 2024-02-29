@@ -8,6 +8,8 @@ public class HydraMotionProfile {
     public double maxVel;
     public double maxAccel;
     public double distance;
+    public double targetPosition;
+
 
     /**
      * Constructs a HydraMotionProfile with specified maximum velocity and acceleration.
@@ -31,6 +33,7 @@ public class HydraMotionProfile {
      * @param TargetPos  Target position
      */
     public void calculateProfile(double initialPos, double TargetPos) {
+        this.targetPosition = TargetPos;
         distance = Math.abs(TargetPos - initialPos);
 
         // Check if max acceleration is zero
@@ -98,5 +101,14 @@ public class HydraMotionProfile {
      */
     public boolean isFinished(double time) {
         return time >= getTime();
+    }
+
+    /**
+     * Returns the target position of the motion profile.
+     *
+     * @return The target position
+     */
+    public double getTargetPosition() {
+        return targetPosition;
     }
 }
