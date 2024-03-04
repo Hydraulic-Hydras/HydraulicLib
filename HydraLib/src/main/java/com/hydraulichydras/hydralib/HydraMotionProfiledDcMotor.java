@@ -108,11 +108,8 @@ public class HydraMotionProfiledDcMotor implements DcMotorSimple {
      * Update must be called for the motor to gain power.
      */
     public void update() {
-        // Calculate error between target position and current position
-        double error = motionProfile.getTargetPosition() - motor.getCurrentPosition();
-
         // Run the PIDF controller to get the motor power
-        double power = controller.update(error, motor.getVelocity());
+        double power = controller.update(motor.getCurrentPosition(), motor.getVelocity());
 
         // Set the motor power
         motor.setPower(power * RETRACTION_MULTIPLIER);
