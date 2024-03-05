@@ -72,6 +72,29 @@ public class HydraPose {
         return new HydraVector2d(x, y);
     }
 
+    // Getter method for X coordinate
+    public double getX() {
+        return x;
+    }
+
+    // Getter method for Y coordinate
+    public double getY() {
+        return y;
+    }
+
+    // Getter method for heading
+    public double getHeading() {
+        return heading;
+    }
+
+    public HydraVector2d vec() {
+        return new HydraVector2d(x, y);
+    }
+
+    public HydraVector2d headingVec() {
+        return new HydraVector2d(Math.cos(heading), Math.sin(heading));
+    }
+
     // Override equals method to compare poses for equality
     @Override
     public boolean equals(Object obj) {
@@ -83,6 +106,18 @@ public class HydraPose {
             return (x == pose.x) && (y == pose.y) && (heading == pose.heading);
         }
         return false;
+    }
+
+    public boolean epsilonEquals(HydraPose other) {
+        return epsilonEquals(x, other.x) && epsilonEquals(y, other.y) && epsilonEquals(heading, other.heading);
+    }
+
+    private static boolean epsilonEquals(double a, double b) {
+        return Math.abs(a - b) < Math.pow(10, -10);
+    }
+
+    public boolean epsilonEqualsHeading(HydraPose other) {
+        return epsilonEquals(x, other.x) && epsilonEquals(y, other.y) && HydraAngle.normDelta(heading - other.heading) == 0.0;
     }
 
     // Override toString method to provide a string representation of the pose

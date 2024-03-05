@@ -36,10 +36,16 @@ public class HydraMotionProfiledDcMotor implements DcMotorSimple {
     /**
      * Constructor for HydraMotionProfiledDcMotor.
      *
-     * @param motor DcMotorEx instance to control motion
+     * @param hardwareMap HardwareMap instance to get motor from
+     * @param name        Name of the motor on the hardware map
      */
-    public HydraMotionProfiledDcMotor(DcMotorEx motor) {
-        this.motor = motor;
+    public HydraMotionProfiledDcMotor(HardwareMap hardwareMap, String name) {
+        motor = hardwareMap.get(DcMotorEx.class, name);
+        motor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        motor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        motor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        RETRACTION_MULTIPLIER = 1.0;
     }
 
     /**

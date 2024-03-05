@@ -16,6 +16,11 @@ public interface HydraLocalizer {
     void setPoseEstimate(HydraPose pose);
 
     /**
+     * Current robot pose velocity (optional)
+     */
+    HydraPose getPoseVelocity();
+
+    /**
      * Updates localization
      */
     void update();
