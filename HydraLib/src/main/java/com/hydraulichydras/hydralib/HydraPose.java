@@ -14,8 +14,7 @@ public class HydraPose {
     // Position coordinates
     public double x;
     public double y;
-    // Heading angle (in radians)
-    public double heading;
+    public double heading; // Heading angle (in radians)
 
     // Default constructor initializes the pose to origin (0, 0) with zero heading
     public HydraPose() {
@@ -72,21 +71,6 @@ public class HydraPose {
         return new HydraVector2d(x, y);
     }
 
-    // Getter method for X coordinate
-    public double getX() {
-        return x;
-    }
-
-    // Getter method for Y coordinate
-    public double getY() {
-        return y;
-    }
-
-    // Getter method for heading
-    public double getHeading() {
-        return heading;
-    }
-
     public HydraVector2d vec() {
         return new HydraVector2d(x, y);
     }
@@ -118,6 +102,21 @@ public class HydraPose {
 
     public boolean epsilonEqualsHeading(HydraPose other) {
         return epsilonEquals(x, other.x) && epsilonEquals(y, other.y) && HydraAngle.normDelta(heading - other.heading) == 0.0;
+    }
+
+    // Getter method for X coordinate
+    public double getX() {
+        return x;
+    }
+
+    // Getter method for Y coordinate
+    public double getY() {
+        return y;
+    }
+
+    // Getter method for heading
+    public double getHeading() {
+        return heading;
     }
 
     // Override toString method to provide a string representation of the pose

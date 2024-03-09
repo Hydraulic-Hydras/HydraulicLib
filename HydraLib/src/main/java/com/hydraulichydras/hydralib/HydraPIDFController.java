@@ -39,6 +39,11 @@ public class HydraPIDFController {
         this.clock = clock != null ? clock : NanoClock.system();
     }
 
+    public void setPID(double P, double I, double D) {
+        coefficients.kP = P;
+        coefficients.kI = I;
+        coefficients.kD = D;
+    }
     public HydraPIDFController(HydraPIDCoefficients pid) {
         this.coefficients = pid;
         this.kV = 0.0;
