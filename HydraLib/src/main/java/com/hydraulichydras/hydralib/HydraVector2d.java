@@ -100,10 +100,6 @@ public class HydraVector2d {
         return y;
     }
 
-    public boolean epsilonEquals(HydraVector2d other) {
-        return Double.compare(x, other.x) == 0 && Double.compare(y, other.y) == 0;
-    }
-
     // Override toString method to provide a string representation of the vector
     @Override
     public String toString() {

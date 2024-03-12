@@ -92,18 +92,6 @@ public class HydraPose {
         return false;
     }
 
-    public boolean epsilonEquals(HydraPose other) {
-        return epsilonEquals(x, other.x) && epsilonEquals(y, other.y) && epsilonEquals(heading, other.heading);
-    }
-
-    private static boolean epsilonEquals(double a, double b) {
-        return Math.abs(a - b) < Math.pow(10, -10);
-    }
-
-    public boolean epsilonEqualsHeading(HydraPose other) {
-        return epsilonEquals(x, other.x) && epsilonEquals(y, other.y) && HydraAngle.normDelta(heading - other.heading) == 0.0;
-    }
-
     // Getter method for X coordinate
     public double getX() {
         return x;
