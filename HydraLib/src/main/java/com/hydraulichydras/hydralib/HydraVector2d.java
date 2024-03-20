@@ -7,6 +7,7 @@ package com.hydraulichydras.hydralib;
 public class HydraVector2d {
 
     // Components of the vector
+
     public double x;
     public double y;
 
