@@ -30,7 +30,7 @@ Then in `build.dependencies.gradle` add:
         maven { url "https://jitpack.io" }
    }
    dependencies {
-        implementation 'com.github.Tea505:HydraulicLib:VERSION'
+        implementation 'com.github.Hydraulic-Hydras:HydraulicLib:Tag'
     }
    ```  
 Replacing `VERSION` with the latest release
