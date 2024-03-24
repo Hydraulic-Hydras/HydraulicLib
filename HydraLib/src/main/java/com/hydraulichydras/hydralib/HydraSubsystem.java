@@ -1,12 +1,12 @@
 package com.hydraulichydras.hydralib;
 
 /*
- * A basic Subsytem class to be used with Command Sequences. Subsystems are also another form of HydraContraption.
+ * A basic Subsystem class to be used with Command Sequences. Subsystems are also another form of HydraContraption.
  */
 public abstract class HydraSubsystem {
     
     /**
-     * This method is called periodically, usefil for updating specific-Subsytem states.
+     * This method is called periodically, useful for updating specific-Subsystem states.
      */
     public abstract void periodic();
 

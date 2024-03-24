@@ -3,7 +3,6 @@ package com.hydraulichydras.hydralib;
 /*
  * A simple Command state machine that represents actions which are performed by the robot.
  */
-@FunctionalInterface
 public interface HydraCommand {
     
     /**
