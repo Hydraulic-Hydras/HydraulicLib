@@ -4,15 +4,33 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * A command group that executes multiple commands in parallel.
+ */
 public class HydraCollateralCommand extends HydraSerialCommand {
 
+    // Map to track the state of each command in the group
     private final Map<HydraCommand, Boolean> commands = new HashMap<>();
+
+    // Flag indicating whether the group should run when the robot is disabled
     private boolean runWhenDisabled = true;
 
+    /**
+     * Constructs a new HydraCollateralCommand with the specified commands.
+     *
+     * @param commands the commands to be executed in parallel
+     */
     public HydraCollateralCommand(HydraCommand... commands) {
         addCommands(commands);
     }
 
+    /**
+     * Adds commands to the group.
+     *
+     * @param commands the commands to be added to the group
+     * @throws IllegalStateException if commands are added while the group is running
+     * @throws IllegalArgumentException if multiple commands require the same subsystems
+     */
     @Override
     public final void addCommands(HydraCommand... commands) {
         requireUnGrouped(commands);
@@ -35,6 +53,9 @@ public class HydraCollateralCommand extends HydraSerialCommand {
         }
     }
 
+    /**
+     * Initializes all commands in the group.
+     */
     @Override
     public void initialize() {
         for (Map.Entry<HydraCommand, Boolean> commandRunning : commands.entrySet()) {
@@ -43,6 +64,9 @@ public class HydraCollateralCommand extends HydraSerialCommand {
         }
     }
 
+    /**
+     * Executes all commands in the group.
+     */
     @Override
     public void execute() {
         for (Map.Entry<HydraCommand, Boolean> commandRunning : commands.entrySet()) {
@@ -57,6 +81,11 @@ public class HydraCollateralCommand extends HydraSerialCommand {
         }
     }
 
+    /**
+     * Ends all commands in the group.
+     *
+     * @param interrupted true if the commands are interrupted, false otherwise
+     */
     @Override
     public void end(boolean interrupted) {
         if (interrupted) {
@@ -68,14 +97,23 @@ public class HydraCollateralCommand extends HydraSerialCommand {
         }
     }
 
+    /**
+     * Checks if all commands in the group have finished.
+     *
+     * @return true if all commands have finished, false otherwise
+     */
     @Override
     public boolean isFinished() {
         return !commands.containsValue(true);
     }
 
+    /**
+     * Checks if the group should run when the robot is disabled.
+     *
+     * @return true if the group should run when disabled, false otherwise
+     */
     @Override
     public boolean runsWhenDisabled() {
         return runWhenDisabled;
     }
-
 }

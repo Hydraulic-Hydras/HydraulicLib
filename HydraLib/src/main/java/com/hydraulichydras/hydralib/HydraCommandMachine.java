@@ -1,22 +1,17 @@
 package com.hydraulichydras.hydralib;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Consumer;
 
+/**
+ * Manages the execution and scheduling of Hydra commands.
+ */
 public final class HydraCommandMachine {
 
+    // Singleton instance of the command machine
     private static HydraCommandMachine instance;
 
+    // Returns the singleton instance of the command machine
     public static synchronized HydraCommandMachine getInstance() {
         if (instance == null) {
             instance = new HydraCommandMachine();
@@ -24,33 +19,51 @@ public final class HydraCommandMachine {
         return instance;
     }
 
+    // Map to store scheduled commands and their states
     private final Map<HydraCommand, HydraCommandState> scheduledCommands = new LinkedHashMap<>();
+
+    // Map to store requirements (subsystems) and the commands associated with them
     private final Map<HydraSubsystem, HydraCommand> requirements = new LinkedHashMap<>();
+
+    // Map to store registered subsystems and their default commands
     private final Map<HydraSubsystem, HydraCommand> subsystems = new LinkedHashMap<>();
+
+    // Collection to store buttons that trigger commands
     private final Collection<Runnable> buttons = new LinkedHashSet<>();
 
+    // Flag indicating if the robot is disabled
     private boolean disabled;
 
-    // Lists of user-supplied actions to be executed on scheduling events for every command.
+    // Lists of user-supplied actions to be executed on scheduling events for every command
     private final List<Consumer<HydraCommand>> initActions = new ArrayList<>();
     private final List<Consumer<HydraCommand>> executeActions = new ArrayList<>();
     private final List<Consumer<HydraCommand>> disruptActions = new ArrayList<>();
     private final List<Consumer<HydraCommand>> finishActions = new ArrayList<>();
 
+    // Map to store commands to be scheduled and their interruptibility
     private final Map<HydraCommand, Boolean> toSchedule = new LinkedHashMap<>();
+
+    // Flag indicating if the command machine is in a run loop
     private boolean inRunLoop;
+
+    // List of commands to be canceled
     private final List<HydraCommand> toCancel = new ArrayList<>();
 
-    public HydraCommandMachine() {}
+    // Private constructor to enforce singleton pattern
+    private HydraCommandMachine() {
+    }
 
+    // Registers a button that triggers commands
     public void addButton(Runnable button) {
         buttons.add(button);
     }
 
+    // Clears all registered buttons
     public void clearButtons() {
         buttons.clear();
     }
 
+    // Initializes a command and adds it to the scheduled commands
     private void initCommand(HydraCommand command, boolean disrupt, Set<HydraSubsystem> requirements) {
         command.initialize();
         HydraCommandState scheduledCommand = new HydraCommandState(disrupt);
@@ -64,6 +77,7 @@ public final class HydraCommandMachine {
         }
     }
 
+    // Schedules a command with interruptibility and checks for conflicts
     private void schedule(boolean disrupt, HydraCommand command) {
         if (inRunLoop) {
             toSchedule.put(command, disrupt);
@@ -83,7 +97,7 @@ public final class HydraCommandMachine {
 
         if (Collections.disjoint(this.requirements.keySet(), S_requirement)) {
             initCommand(command, disrupt, S_requirement);
-        }   else {
+        } else {
             for (HydraSubsystem requirement : S_requirement) {
                 if (this.requirements.containsKey(requirement) && !Objects.requireNonNull(scheduledCommands.get(this.requirements.get(requirement))).isDisrupted()) {
                     return;
@@ -100,33 +114,37 @@ public final class HydraCommandMachine {
         }
     }
 
+    // Schedules multiple commands with interruptibility
     public void schedule(boolean disrupt, HydraCommand... commands) {
         for (HydraCommand command : commands) {
             schedule(disrupt, command);
         }
     }
 
+    // Schedules multiple commands with interruptibility (default to interruptible)
     public void schedule(HydraCommand... commands) {
         schedule(true, commands);
     }
 
+    // Runs the command machine
     public void run() {
         if (disabled) {
             return;
         }
 
-        // Run the periodic method of all registered subsystems.
+        // Run the periodic method of all registered subsystems
         for (HydraSubsystem subsystem : this.subsystems.keySet()) {
             subsystem.periodic();
         }
 
-        // Poll buttons for new commands to add.
+        // Poll buttons for new commands to add
         for (Runnable button : buttons) {
             button.run();
         }
 
         inRunLoop = true;
-        // Run scheduled commands, remove finished commands.
+
+        // Run scheduled commands, remove finished commands
         for (Iterator<HydraCommand> iterator = scheduledCommands.keySet().iterator();
              iterator.hasNext(); ) {
             HydraCommand command = iterator.next();
@@ -158,6 +176,7 @@ public final class HydraCommandMachine {
 
         inRunLoop = false;
 
+        // Schedule commands and cancel commands based on queued actions
         for (Map.Entry<HydraCommand, Boolean> commandInterruptible : toSchedule.entrySet()) {
             schedule(commandInterruptible.getValue(), commandInterruptible.getKey());
         }
@@ -169,7 +188,7 @@ public final class HydraCommandMachine {
         toSchedule.clear();
         toCancel.clear();
 
-        // Add default commands for un-required registered subsystems.
+        // Add default commands for un-required registered subsystems
         for (Map.Entry<HydraSubsystem, HydraCommand> subsystemCommand : this.subsystems.entrySet()) {
             if (!this.requirements.containsKey(subsystemCommand.getKey())
                     && subsystemCommand.getValue() != null) {
@@ -178,49 +197,59 @@ public final class HydraCommandMachine {
         }
     }
 
-
+    // Registers Hydra subsystems
     public void registerHydraSubsystem(HydraSubsystem... subsystems) {
         for (HydraSubsystem subsystem : subsystems) {
             this.subsystems.put(subsystem, null);
         }
     }
 
+    // Unregisters Hydra subsystems
     public void unregisterHydraSubsystem(HydraSubsystem... subsystems) {
         Arrays.asList(subsystems).forEach(this.subsystems.keySet()::remove);
     }
 
+    // Resets the singleton instance of the command machine
     public synchronized void reset() {
         instance = null;
     }
 
-
+    // Sets the default command for a subsystem
     public void setDefaultCommand(HydraSubsystem subsystem, HydraCommand defaultCommand) {
+        // Check if the default command requires the subsystem
         if (!defaultCommand.getRequirements().contains(subsystem)) {
             throw new IllegalArgumentException("Default commands must require their subsystem!");
         }
 
+        // Check if the default command is finished (it should not end)
         if (defaultCommand.isFinished()) {
             throw new IllegalArgumentException("Default commands should not end!");
         }
 
+        // Set the default command for the subsystem
         this.subsystems.put(subsystem, defaultCommand);
     }
 
+    // Retrieves the default command for a subsystem
     public HydraCommand getDefaultCommand(HydraSubsystem subsystem) {
         return this.subsystems.get(subsystem);
     }
 
+    // Cancels specified commands
     public void cancel(HydraCommand... commands) {
         if (inRunLoop) {
             toCancel.addAll(Arrays.asList(commands));
             return;
         }
 
+        // Iterate through specified commands
         for (HydraCommand command : commands) {
+            // Check if the command is scheduled
             if (!scheduledCommands.containsKey(command)) {
                 continue;
             }
 
+            // End the command, perform disruption actions, and remove from scheduled commands
             command.end(true);
             for (Consumer<HydraCommand> action : disruptActions) {
                 action.accept(command);
@@ -230,42 +259,50 @@ public final class HydraCommandMachine {
         }
     }
 
+    // Cancels all scheduled commands
     public void cancelAll() {
         for (HydraCommand command : scheduledCommands.keySet()) {
             cancel(command);
         }
     }
 
+    // Checks if specified commands are scheduled
     public boolean isScheduled(HydraCommand... commands) {
         return scheduledCommands.keySet().containsAll(Arrays.asList(commands));
     }
 
+    // Disables the command machine
     public void disable() {
         disabled = true;
     }
 
+    // Retrieves the command requiring a specified subsystem
     public HydraCommand requiring(HydraSubsystem subsystem) {
         return this.requirements.get(subsystem);
     }
 
+    // Enables the command machine
     public void enable() {
         disabled = false;
     }
 
+    // Adds an action to execute when a command is initialized
     public void onCommandInitialize(Consumer<HydraCommand> action) {
         initActions.add(action);
     }
+
+    // Adds an action to execute when a command is executed
     public void onCommandExecute(Consumer<HydraCommand> action) {
         executeActions.add(action);
     }
 
+    // Adds an action to execute when a command is interrupted
     public void onCommandInterrupt(Consumer<HydraCommand> action) {
         disruptActions.add(action);
     }
 
+    // Adds an action to execute when a command finishes
     public void onCommandFinish(Consumer<HydraCommand> action) {
         finishActions.add(action);
     }
-
-
 }
