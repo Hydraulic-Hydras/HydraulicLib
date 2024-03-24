@@ -26,6 +26,10 @@ public abstract class HydraCommandGroupedFoundation extends HydraCommandFoundati
             throw new IllegalArgumentException("Commands cannot be added to more than one CommandGroup");
         }
     }
+    public static void requireUnGrouped(HydraCommand... commands) {
+        requireUnGrouped(Arrays.asList(commands));
+    }
+
 
     public static Set<HydraCommand> getGroupedCommands() {
         return groupedCommands;
