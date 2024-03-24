@@ -105,12 +105,12 @@ public class HydraVector2d {
 
     // Setter method for X coordinate
     public double setX(double x) { 
-        this.x = x;
+        return this.x = x;
     }
 
     // Setter method for Y coordinate
     public double setY(double y) { 
-        this.y = y;
+        return this.y = y;
     }
 
     // Flip the signs of the vector
