@@ -15,12 +15,12 @@ public interface HydraCommand {
     /**
      * Called while the command runs.
      */
-    void execute();
+    default void execute() {}
 
     /**
      * The action after the command ends or cancel it.
      */
-    void end(boolean interrupted);
+    default void end(boolean interrupted) {}
 
     /**
      * To determine if the command has finished. 
