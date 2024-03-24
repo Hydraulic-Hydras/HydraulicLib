@@ -33,6 +33,26 @@ public interface HydraCommand {
 
     Set<HydraSubsystem> getRequirements();
 
+    default HydraCommand whenFinished(Runnable toRun) {
+        return new HydraSerialCommand(this, new HydraDirectCommand(toRun));
+    }
+
+    default HydraCommand beforeStarting(Runnable toRun) {
+        return new HydraSerialCommand(new HydraDirectCommand(toRun), this);
+    }
+
+    default HydraCommand andThen(HydraCommand... next) {
+        HydraSerialCommand group = new HydraSerialCommand(this);
+        group.addCommands(next);
+        return group;
+    }
+
+    default HydraCommand alongWith(HydraCommand... parallel) {
+        HydraCollateralCommand group = new HydraCollateralCommand(this);
+        group.addCommands(parallel);
+        return group;
+    }
+
     default boolean hasRequirement(HydraSubsystem requirement) {
         return getRequirements().contains(requirement);
     }
