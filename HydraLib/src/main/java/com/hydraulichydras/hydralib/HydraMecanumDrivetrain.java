@@ -1,8 +1,11 @@
 package com.hydraulichydras.hydralib;
 
+import com.arcrobotics.ftclib.drivebase.RobotDrive;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Gamepad;
+import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -11,12 +14,28 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * This class provides methods for controlling the drivetrain's movement and accessing telemetry data.
  * It allows for setting motor power, direction, and provides telemetry feedback of motor index values.
  */
-public class HydraMecanumDrivetrain {
+public class HydraMecanumDrivetrain extends HydraSubsystem implements HydraDrivetrain {
 
     /**
      * DcMotor array for Drivetrain Class.
      */
-    public DcMotor[] motors;
+    public DcMotorEx[] motors;
+
+    // Positional Speed provided to motors
+    public double[] poseSpeed = new double[4]; // Array to store the speed provided to each of the four motors
+
+    // PID Constants
+    public static double xP = 0; // Proportional constant for the x-axis PID controller
+    public static double xD = 0; // Derivative constant for the x-axis PID controller
+    public static double yP = 0; // Proportional constant for the y-axis PID controller
+    public static double yD = 0; // Derivative constant for the y-axis PID controller
+    public static double hP = 0; // Proportional constant for the heading PID controller
+    public static double hD = 0; // Derivative constant for the heading PID controller
+
+    // PIDF Controllers
+    public static HydraPIDFController translationalController = new HydraPIDFController(yP, 0, yD); // PIDF controller for translational movement
+    public static HydraPIDFController StrafingController = new HydraPIDFController(xP, 0, xD); // PIDF controller for strafing movement
+    public static HydraPIDFController headingController = new HydraPIDFController(hP, 0, hD); // PIDF controller for heading control
 
     /**
      * Constructs a new HydraMecanumDrivetrain with the provided DcMotors.
@@ -25,8 +44,8 @@ public class HydraMecanumDrivetrain {
      * @param rightRear The DcMotor for the right rear wheel with Index 2.
      * @param rightFront The DcMotor for the right front wheel with Index 3.
      */
-    public HydraMecanumDrivetrain(DcMotor leftFront, DcMotor leftRear, DcMotor rightRear, DcMotor rightFront) {
-        this.motors = new DcMotor[] {leftFront, leftRear, rightRear, rightFront};
+    public HydraMecanumDrivetrain(DcMotorEx leftFront, DcMotorEx leftRear, DcMotorEx rightRear, DcMotorEx rightFront) {
+        this.motors = new DcMotorEx[] {leftFront, leftRear, rightRear, rightFront};
 
         assignMotor(leftFront, 0);
         assignMotor(leftRear, 1);
@@ -61,6 +80,65 @@ public class HydraMecanumDrivetrain {
         motors[3].setPower(rightFrontSpeed);
     }
 
+    @Override
+    public void set(HydraPose pose) {
+        set(pose, 0);
+    }
+    public void set(HydraPose pose, double angle) {
+        set(pose.x, pose.y, pose.heading, angle);
+    }
+    public void set(double StrafeSpeed, double translationalSpeed, double rotationalSpeed, double gyroAngle) {
+
+        HydraVector2d magnitude = new HydraVector2d(StrafeSpeed, translationalSpeed).rotation(-gyroAngle);
+
+        StrafeSpeed = Range.clip(magnitude.x, -1, 1);
+        translationalSpeed = Range.clip(magnitude.y, -1, 1);
+        rotationalSpeed = Range.clip(rotationalSpeed, -1, 1);
+
+        double[] motorSpeed = new double[4];
+
+        motorSpeed[RobotDrive.MotorType.kFrontLeft.value] = translationalSpeed + StrafeSpeed + rotationalSpeed;
+        motorSpeed[RobotDrive.MotorType.kFrontRight.value] = translationalSpeed - StrafeSpeed - rotationalSpeed;
+        motorSpeed[RobotDrive.MotorType.kBackLeft.value] = (translationalSpeed - StrafeSpeed + rotationalSpeed);
+        motorSpeed[RobotDrive.MotorType.kBackRight.value] = (translationalSpeed + StrafeSpeed - rotationalSpeed);
+
+        double max = 1;
+        for (double WheelSpeed : motorSpeed) max = Math.max(max, Math.abs(WheelSpeed));
+
+        if (max > 1) {
+            motorSpeed[RobotDrive.MotorType.kFrontLeft.value] /= max;
+            motorSpeed[RobotDrive.MotorType.kFrontRight.value] /= max;
+            motorSpeed[RobotDrive.MotorType.kBackLeft.value] /= max;
+            motorSpeed[RobotDrive.MotorType.kBackRight.value] /= max;
+        }
+
+        poseSpeed[0] = motorSpeed[0];
+        poseSpeed[1] = motorSpeed[1];
+        poseSpeed[2] = motorSpeed[2];
+        poseSpeed[3] = motorSpeed[3];
+    }
+
+    @Override
+    public void write() {
+        // This configuration is only for autonomous
+        motors[0].setPower(poseSpeed[0]);
+        motors[1].setPower(poseSpeed[2]);
+        motors[2].setPower(poseSpeed[3]);
+        motors[3].setPower(poseSpeed[1]);
+    }
+
+    public void setXController(double kP, double kI, double kD) {
+       StrafingController.setPID(xP = kP, kI, xD = kD);
+    }
+
+    public void setYController(double kP, double kI, double kD) {
+        translationalController.setPID(yP = kP, kI, yD = kD);
+    }
+
+    public void setHeadingController(double kP, double kI, double kD) {
+        headingController.setPID(hP = kP, kI, hD = kD);
+    }
+
     /**
      * Sets the direction of a motor.
      * @param motorIndex The index of the motor in the motors array.
@@ -93,7 +171,7 @@ public class HydraMecanumDrivetrain {
      * motorIndex is based of the constructor, to clear up any confusion
      * the index 0 of any constructor will always be the LeftFront motor assigned.
      */
-    public void assignMotor(DcMotor motor, int index) {
+    public void assignMotor(DcMotorEx motor, int index) {
         if (index >= 0 && index < 4) {
             motors[index] = motor;
         }
@@ -109,5 +187,20 @@ public class HydraMecanumDrivetrain {
         telemetry.addData("RightRear index value: ", motors[2]);
         telemetry.addData("RightFront index value: ", motors[3]);
         telemetry.update();
+    }
+
+    @Override
+    public void periodic() {
+        // leave blank
+    }
+
+    @Override
+    public void read() {
+        // leave blank
+    }
+
+    @Override
+    public void reset() {
+        // leave blank
     }
 }

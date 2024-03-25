@@ -7,7 +7,6 @@ package com.hydraulichydras.hydralib;
 public class HydraVector2d {
 
     // Components of the vector
-
     public double x;
     public double y;
 
@@ -37,6 +36,8 @@ public class HydraVector2d {
     public double angleBetween(HydraVector2d other) {
         return Math.acos((this.dot(other)) / (this.norm() * other.norm()));
     }
+
+    // Method to multiply a vector by another vector
     public double dot(HydraVector2d other) {
         return x * other.x + y * other.y;
     }
@@ -57,6 +58,7 @@ public class HydraVector2d {
         return new HydraVector2d(x - other.x, y - other.y);
     }
 
+    // Method to add another vector from this vector
     public HydraVector2d plus(HydraVector2d other) {
         return new HydraVector2d(x + other.x, y + other.y);
     }
@@ -99,6 +101,41 @@ public class HydraVector2d {
     // Getter method for Y coordinate
     public double getY() {
         return y;
+    }
+
+    // Setter method for X coordinate
+    public double setX(double x) { 
+        return this.x = x;
+    }
+
+    // Setter method for Y coordinate
+    public double setY(double y) { 
+        return this.y = y;
+    }
+
+    // Flip the signs of the vector
+    public HydraVector2d reflect() { 
+        return new HydraVector2d(-x, -y);
+    }
+
+    // Returns vector reflected into the 1st quadrant
+    public HydraVector2d abs() { 
+        return new HydraVector2d(Math.abs(x), Math.abs(y));
+    }
+
+    public double getLength() {
+        return Math.sqrt(x * x + y * y);
+    }
+
+    public void normalize() { 
+        double magnitude= getLength();
+        x /= magnitude;
+        y /= magnitude;
+    }
+
+    public HydraVector2d getNormalized() {
+        double magnitude = getLength();
+        return new HydraVector2d(x / magnitude, y / magnitude);
     }
 
     // Override toString method to provide a string representation of the vector
