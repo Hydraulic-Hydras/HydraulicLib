@@ -107,6 +107,7 @@ public class HydraPose {
         return heading;
     }
 
+
     // Override toString method to provide a string representation of the pose
     @Override
     public String toString() {
