@@ -10,7 +10,7 @@ public interface HydraCommand {
     /**
      * Called once when the command is initially scheduled.
      */
-    void initialize();
+    default void initialize() {}
 
     /**
      * Called while the command runs.
