@@ -21,11 +21,21 @@ public class HydraMecanumDrivetrain extends HydraSubsystem implements HydraDrive
      */
     public DcMotorEx[] motors;
 
-    public double[] poseSpeed = new double[4];
+    // Positional Speed provided to motors
+    public double[] poseSpeed = new double[4]; // Array to store the speed provided to each of the four motors
 
-    public static HydraPIDFController translationalController = new HydraPIDFController(0, 0, 0);
-    public static HydraPIDFController StrafingController = new HydraPIDFController(0, 0, 0);
-    public static HydraPIDFController headingController = new HydraPIDFController(0, 0, 0);
+    // PID Constants
+    public static double xP = 0; // Proportional constant for the x-axis PID controller
+    public static double xD = 0; // Derivative constant for the x-axis PID controller
+    public static double yP = 0; // Proportional constant for the y-axis PID controller
+    public static double yD = 0; // Derivative constant for the y-axis PID controller
+    public static double hP = 0; // Proportional constant for the heading PID controller
+    public static double hD = 0; // Derivative constant for the heading PID controller
+
+    // PIDF Controllers
+    public static HydraPIDFController translationalController = new HydraPIDFController(yP, 0, yD); // PIDF controller for translational movement
+    public static HydraPIDFController StrafingController = new HydraPIDFController(xP, 0, xD); // PIDF controller for strafing movement
+    public static HydraPIDFController headingController = new HydraPIDFController(hP, 0, hD); // PIDF controller for heading control
 
     /**
      * Constructs a new HydraMecanumDrivetrain with the provided DcMotors.
@@ -118,15 +128,15 @@ public class HydraMecanumDrivetrain extends HydraSubsystem implements HydraDrive
     }
 
     public void setXController(double kP, double kI, double kD) {
-        StrafingController.setPID(kP, kI, kD);
+       StrafingController.setPID(xP = kP, kI, xD = kD);
     }
 
     public void setYController(double kP, double kI, double kD) {
-        translationalController.setPID(kP, kI, kD);
+        translationalController.setPID(yP = kP, kI, yD = kD);
     }
 
     public void setHeadingController(double kP, double kI, double kD) {
-        headingController.setPID(kP, kI, kD);
+        headingController.setPID(hP = kP, kI, hD = kD);
     }
 
     /**

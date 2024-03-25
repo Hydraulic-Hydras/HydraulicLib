@@ -39,6 +39,14 @@ public class HydraPIDFController {
         this.clock = clock != null ? clock : NanoClock.system();
     }
 
+    public HydraPIDFController(HydraPIDCoefficients pid) {
+        this.coefficients = pid;
+        this.kV = 0.0;
+        this.kA = 0.0;
+        this.kStatic = 0.0;
+        this.kF = (position, velocity) -> 0.0;
+    }
+
     public HydraPIDFController(double P, double I, double D) {
         coefficients.kP = P;
         coefficients.kI = I;
@@ -49,13 +57,6 @@ public class HydraPIDFController {
         coefficients.kP = P;
         coefficients.kI = I;
         coefficients.kD = D;
-    }
-    public HydraPIDFController(HydraPIDCoefficients pid) {
-        this.coefficients = pid;
-        this.kV = 0.0;
-        this.kA = 0.0;
-        this.kStatic = 0.0;
-        this.kF = (position, velocity) -> 0.0;
     }
 
     public double getLastError() {
