@@ -64,7 +64,7 @@ public interface HydraCommand {
      * @param next the commands to be executed after this command.
      * @return a new command representing the sequential execution of this command followed by the given commands.
      */
-    default HydraCommand andThen(HydraCommand... next) {
+    default HydraCommand afterThat(HydraCommand... next) {
         HydraSerialCommand group = new HydraSerialCommand(this);
         group.addCommands(next);
         return group;

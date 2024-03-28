@@ -126,18 +126,6 @@ public class HydraMecanumDrivetrain {
     }
 
     /**
-     * Updates telemetry with the index values of each motor.
-     * @param telemetry The telemetry object to update.
-     */
-    public void telemetry(Telemetry telemetry) {
-        telemetry.addData("LeftFront index value: ", motors[0]);
-        telemetry.addData("LeftRear index value: ", motors[1]);
-        telemetry.addData("RightRear index value: ", motors[2]);
-        telemetry.addData("RightFront index value: ", motors[3]);
-        telemetry.update();
-    }
-
-    /**
      * Method to set a specified HydraPose
      *
      * @param x The x-axis
@@ -184,5 +172,17 @@ public class HydraMecanumDrivetrain {
         // Update pose
         HydraPose newPose = new HydraPose(newX, newY, newHeading);
         pose.set(newPose);
+    }
+
+    /**
+     * Updates telemetry with the index values of each motor.
+     * @param telemetry The telemetry object to update.
+     */
+    public void telemetry(Telemetry telemetry) {
+        telemetry.addData("LeftFront index value: ", motors[0]);
+        telemetry.addData("LeftRear index value: ", motors[1]);
+        telemetry.addData("RightRear index value: ", motors[2]);
+        telemetry.addData("RightFront index value: ", motors[3]);
+        telemetry.update();
     }
 }

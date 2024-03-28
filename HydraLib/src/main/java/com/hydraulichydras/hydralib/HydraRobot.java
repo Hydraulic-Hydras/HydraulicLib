@@ -24,7 +24,7 @@ public class HydraRobot {
      */
     protected Telemetry telemetry;
 
-    public HydraRobot(HardwareMap hardwareMap, Telemetry telemetry) {
+    public void initialize(HardwareMap hardwareMap, Telemetry telemetry) {
         this.hardwareMap = hardwareMap;
         this.telemetry = telemetry;
     }
