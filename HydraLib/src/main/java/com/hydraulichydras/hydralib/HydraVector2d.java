@@ -30,8 +30,8 @@ public class HydraVector2d {
 
     //makes a unit vector with a certain angle
     public HydraVector2d(HydraAngle angle) {
-        this.x = Math.cos(Math.toRadians(angle.convertAngle(HydraAngle.AngleType.NEG_180_TO_180_CARTESIAN).getAngle()));
-        this.y = Math.sin(Math.toRadians(angle.convertAngle(HydraAngle.AngleType.NEG_180_TO_180_CARTESIAN).getAngle()));
+        this.x = Math.cos(Math.toRadians(angle.convertAngle(HydraAngleType.NEG_180_TO_180_CARTESIAN).getAngle()));
+        this.y = Math.sin(Math.toRadians(angle.convertAngle(HydraAngleType.NEG_180_TO_180_CARTESIAN).getAngle()));
         this.fixFloatingPointErrors();
     }
 
@@ -105,11 +105,11 @@ public class HydraVector2d {
     //returns Angle object
     public HydraAngle getAngle() {
         double angRad = Math.atan2(y, x);
-        return new HydraAngle(Math.toDegrees(angRad), HydraAngle.AngleType.NEG_180_TO_180_CARTESIAN);
+        return new HydraAngle(Math.toDegrees(angRad), HydraAngleType.NEG_180_TO_180_CARTESIAN);
     }
 
     //returns numerical value for angle in specified type
-    public double getAngleDouble(HydraAngle.AngleType type) {
+    public double getAngleDouble(HydraAngleType type) {
         return this.getAngle().convertAngle(type).getAngle();
     }
 
@@ -129,9 +129,9 @@ public class HydraVector2d {
 
 
     // returns HydraVector2d rotated by ang degrees
-    public HydraVector2d rotateBy(double ang, HydraAngle.Direction direction) {
+    public HydraVector2d rotateBy(double ang, HydraAngleDirection direction) {
         double angRads;
-        if (direction == HydraAngle.Direction.COUNTER_CLOCKWISE) {
+        if (direction == HydraAngleDirection.COUNTER_CLOCKWISE) {
             angRads = Math.toRadians(ang); //default vector rotation direction is CCW
         } else {
             angRads = -1 * Math.toRadians(ang);
