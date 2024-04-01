@@ -1,6 +1,6 @@
 package com.hydraulichydras.hydralib;
 
-/*
+/**
  * A basic Subsystem class to be used with Command Sequences. Subsystems are also another form of HydraContraption.
  */
 public abstract class HydraSubsystem {

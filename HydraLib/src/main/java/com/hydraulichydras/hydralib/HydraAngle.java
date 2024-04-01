@@ -10,12 +10,21 @@ public class HydraAngle {
             BACKWARD = new HydraAngle(180, HydraAngleType.NEG_180_TO_180_HEADING),
             FORWARD = new HydraAngle(0, HydraAngleType.NEG_180_TO_180_HEADING);
 
+    /** The angle value. */
     private double angle;
+
+    /** The type of angle representation. */
     private final HydraAngleType type;
 
-    // Constant representing Tau (2 * Pi)
+    /** The type of angle representation. */
     private static final double TAU = (Math.PI * 2);
 
+    /**
+     * Constructs a HydraAngle object with the given angle and type.
+     *
+     * @param angle The angle value.
+     * @param type  The type of angle representation.
+     */
     public HydraAngle (double angle, HydraAngleType type) {
         this.angle = angle;
         this.type = type;
@@ -24,19 +33,78 @@ public class HydraAngle {
         this.angle = convertAngleDouble(type);
     }
 
+    // Public Methods
+
+    /**
+     * Gets the angle value in the specified type.
+     *
+     * @param type The type of angle representation.
+     * @return The angle value.
+     */
     public double getAngle (HydraAngleType type) {
         return this.convertAngle(type).getAngle();
     }
 
+    /**
+     * Gets the angle value.
+     *
+     * @return The angle value.
+     */
     public double getAngle () { return angle; }
+
+    /**
+     * Gets the type of angle representation.
+     *
+     * @return The type of angle representation.
+     */
     public HydraAngleType getType () { return type; }
 
-    //assumes DEGREES for input and output!! use built-in Java method to convert between radians and degrees
-    //no other assumptions related to inputAngle value (can be -infinity to infinity)
+    /**
+     * Converts the angle to the specified type. Assumes Degrees for input and output.
+     *
+     * @param outputType The type of angle representation to convert to.
+     * @return The angle in the specified type.
+     */
     public HydraAngle convertAngle (HydraAngleType outputType) {
         return new HydraAngle (convertAngleDouble(outputType), outputType);
     }
 
+    /**
+     * Normalizes an angle to the range [0, 2*Pi).
+     *
+     * @param angle The angle to be normalized.
+     * @return The normalized angle within the range [0, 2*Pi).
+     */
+    public static double norm(double angle) {
+        // Calculate the angle modulo Tau to ensure it's within [0, 2*Pi)
+        double modifiedAngle = angle % TAU;
+        // Ensure the result is positive by adding Tau and taking the modulo again
+        modifiedAngle = (modifiedAngle + TAU) % TAU;
+        return modifiedAngle;
+    }
+
+    /**
+     * Normalizes an angle delta to the range (-Pi, Pi].
+     *
+     * @param angleDelta The angle delta to be normalized.
+     * @return The normalized angle delta within the range (-Pi, Pi].
+     */
+    public static double normDelta(double angleDelta) {
+        // Normalize the angle delta
+        double modifiedAngleDelta = norm(angleDelta);
+        // If the normalized delta is greater than Pi, subtract Tau to bring it into (-Pi, Pi]
+        if (modifiedAngleDelta > Math.PI) {
+            modifiedAngleDelta -= TAU;
+        }
+        return modifiedAngleDelta;
+    }
+
+    /**
+     * Converts the angle to the specified type (double value).
+     *
+     * @param outputType The type of angle representation to convert to.
+     * @return The angle value in the specified type.
+     */
     public double convertAngleDouble (HydraAngleType outputType) {
         //handles case of same input and output type
         if (type == outputType) {
@@ -59,8 +127,13 @@ public class HydraAngle {
         }
     }
 
-    //returns absolute value of difference between two Angles (can be any type)
-    //min return value is 0 and max return value is 180
+    /**
+     * Gets the absolute difference between this angle and another angle.
+     * Min return value is 0 and Max return value is 180.
+     *
+     * @param other The other angle.
+     * @return The absolute difference between the angles.
+     */
     public double getDifference (HydraAngle other) {
         HydraAngle otherConverted = other.convertAngle(HydraAngleType.ZERO_TO_360_CARTESIAN);
         HydraAngle thisConverted = this.convertAngle(HydraAngleType.ZERO_TO_360_CARTESIAN);
@@ -72,10 +145,12 @@ public class HydraAngle {
         return rawDiff; //number between  0 and 180
     }
 
-    //returns direction of travel FROM this angle TO other angle
-    //example: direction FROM 0 degrees TO 90 degrees (both in NEG_180_TO_180_HEADING type) is CLOCKWISE
-    //returns either CLOCKWISE or COUNTER_CLOCKWISE
-    //defaults to CLOCKWISE if angles are identical (difference is zero)
+    /**
+     * Determines the direction of travel from this angle to another angle.
+     *
+     * @param other The other angle.
+     * @return The direction of travel.
+     */
     public HydraAngleDirection directionTo (HydraAngle other) {
         HydraAngle otherConverted = other.convertAngle(HydraAngleType.ZERO_TO_360_CARTESIAN);
         HydraAngle thisConverted = this.convertAngle(HydraAngleType.ZERO_TO_360_CARTESIAN);
@@ -96,8 +171,16 @@ public class HydraAngle {
         }
     }
 
-    // passing a negative degrees will work, but will reverse the direction.
-    // direction should indicate positive direction of the angle system being used
+
+    /**
+     * Rotates the angle by the specified amount and direction.
+     * Passing a negative degrees will work, but will reverse the direction.
+     * Direction should indicate positive direction of the angle system being used
+     *
+     * @param degrees   The amount of rotation in degrees.
+     * @param direction The direction of rotation.
+     * @return The rotated angle.
+     */
     public HydraAngle rotateBy (double degrees, HydraAngleDirection direction) {
         HydraAngle thisConverted = this.convertAngle(HydraAngleType.ZERO_TO_360_HEADING);
         double newAngle;
@@ -109,20 +192,31 @@ public class HydraAngle {
         return new HydraAngle(newAngle, HydraAngleType.ZERO_TO_360_HEADING).convertAngle(this.type);
     }
 
-    //defaults to positive direction of this angle
+    /**
+     * Rotates the angle by the specified amount in the positive direction.
+     *
+     * @param degrees The amount of rotation in degrees.
+     * @return The rotated angle.
+     */
     public HydraAngle rotateBy (double degrees) {
         return rotateBy(degrees, this.getPositiveDirection());
     }
 
+    /**
+     * Computes the average angle between two angles.
+     *
+     * @param angle1 The first angle.
+     * @param angle2 The second angle.
+     * @return The average angle.
+     */
     public static HydraAngle getAverageAngle (HydraAngle angle1, HydraAngle angle2) {
         double difference = angle1.getDifference(angle2);
         HydraAngleDirection direction = angle1.directionTo(angle2);
         return angle1.rotateBy(difference/2.0, direction);
     }
 
-    //INTERNAL METHODS - don't worry about these unless you're interested in how this class works
-
-    //input and output type should have the same numerical system
+    //INTERNAL METHODS
+    // input and output type should have the same numerical system
     public static double convertCoordinateSystem (double inputAngle, HydraAngleType inputType, HydraAngleType outputType) {
         //ensure input and output coordinate system not same- assumed different later on (bc of *-1)
         if (sameCoordinateSystem(inputType, outputType)) {
@@ -215,25 +309,5 @@ public class HydraAngle {
     //python % never returns negative numbers, but Java % does
     public static double mod (double n, double m) {
         return (((n % m) + m) % m);
-    }
-
-    // Method to normalize an angle to the range [0, 2*Pi)
-    public static double norm(double angle) {
-        // Calculate the angle modulo Tau to ensure it's within [0, 2*Pi)
-        double modifiedAngle = angle % TAU;
-        // Ensure the result is positive by adding Tau and taking the modulo again
-        modifiedAngle = (modifiedAngle + TAU) % TAU;
-        return modifiedAngle;
-    }
-
-    // Method to normalize an angle delta to the range (-Pi, Pi]
-    public static double normDelta(double angleDelta) {
-        // Normalize the angle delta
-        double modifiedAngleDelta = norm(angleDelta);
-        // If the normalized delta is greater than Pi, subtract Tau to bring it into (-Pi, Pi]
-        if (modifiedAngleDelta > Math.PI) {
-            modifiedAngleDelta -= TAU;
-        }
-        return modifiedAngleDelta;
     }
 }

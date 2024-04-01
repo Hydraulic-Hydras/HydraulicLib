@@ -2,7 +2,7 @@ package com.hydraulichydras.hydralib;
 
 import java.util.Set;
 
-/*
+/**
  * A simple Command state machine that represents actions which are performed by the robot.
  */
 public interface HydraCommand {
