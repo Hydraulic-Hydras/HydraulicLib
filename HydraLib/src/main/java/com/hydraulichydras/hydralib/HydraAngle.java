@@ -10,11 +10,11 @@ public class HydraAngle {
             BACKWARD = new HydraAngle(180, AngleType.NEG_180_TO_180_HEADING),
             FORWARD = new HydraAngle(0, AngleType.NEG_180_TO_180_HEADING);
 
-    enum AngleType {
+    public enum AngleType {
         ZERO_TO_360_CARTESIAN, ZERO_TO_360_HEADING, NEG_180_TO_180_CARTESIAN, NEG_180_TO_180_HEADING
     }
 
-    enum Direction {
+    public enum Direction {
         CLOCKWISE, COUNTER_CLOCKWISE
     }
 
