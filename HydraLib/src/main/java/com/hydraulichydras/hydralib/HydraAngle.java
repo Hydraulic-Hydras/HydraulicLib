@@ -3,7 +3,7 @@ package com.hydraulichydras.hydralib;
 // A utility class for handling angles and angle deltas
 public class HydraAngle {
 
-    //relative to robot starting position (right = east, left = west, forward = north, backward = south)
+    // Relative to robot starting position (right = east, left = west, forward = north, backward = south)
     public static final HydraAngle
             RIGHT = new HydraAngle(90, HydraAngleType.NEG_180_TO_180_HEADING),
             LEFT = new HydraAngle(-90, HydraAngleType.NEG_180_TO_180_HEADING),
