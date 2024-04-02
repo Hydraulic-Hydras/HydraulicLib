@@ -3,8 +3,10 @@
 </p>
 
 ## Hydraulic Lib
-HydraulicLib is a comprehensive custom library designed to streamline programming for both seasoned veterans and aspiring young programmers in the field of robotics. As of February 26, 2024, the library has been officially released to the public.
+Welcome to HydraulicLib, a versatile and comprehensive library tailored to simplify the journey of robotics programming, whether you're an experienced developer or just starting out. Our mission is to provide a robust yet accessible toolkit that empowers programmers to tackle complex challenges with confidence.
 
+## Getting Started
+To begin leveraging HydraulicLib in your robotics projects, simply install the library and explore the comprehensive documentation provided. With its intuitive interface and robust functionality, HydraulicLib aims to simplify the process of robotics programming, enabling teams to focus on innovation and problem-solving.
 
 To install the library, in `settings.gradle` add:
 </br>
@@ -35,11 +37,9 @@ Then in `build.dependencies.gradle` add:
 Replacing `VERSION` with the latest release
 
 ## Welcome
-Welcome to Hydraulic Lib
+HydraulicLib is crafted with care to accompany you throughout your robotics journey, offering a wealth of features and functionalities designed to enhance your coding experience. Whether you're a seasoned veteran or a novice enthusiast, our library is here to support and assist you every step of the way. At HydraulicLib, we are committed to excellence in both design and functionality. Each component of our library is meticulously crafted to meet the highest standards, ensuring reliability, efficiency, and ease of use for all users. With HydraulicLib, you can trust that you are equipped with a tool of unparalleled quality and performance. We believe in the power of innovation to drive progress and change the world for the better. That's why HydraulicLib is designed to empower programmers to unleash their creativity and explore new possibilities in robotics programming. Whether you're building a simple prototype or a sophisticated robotic system, HydraulicLib provides the tools you need to turn your ideas into reality.
 
-It is thrilling to have you here! Whether you're an experienced developer or just starting out, 
-I hope that this project accompanies and helps you throughout your journey.
-
+HydraulicLib is more than just a library - it's a vibrant community of passionate developers and enthusiasts united by a shared love for robotics and technology. Join us as we embark on this exciting journey together, exchanging ideas, sharing knowledge, and supporting each other every step of the way.
 Feel free to raise issues, submit pull requests, share ideas or hit me up on discord.
 Username: tea7003
 
@@ -80,7 +80,3 @@ Controller currently features a PIDF controller file, facilitating the seamless 
 ### Command
 
 Command houses an array of CommandSequences and functions tailored for constructing robot paths. These commands are designed to be used in conjunction with trajectories, providing teams with a flexible framework for executing complex maneuvers. For alternative methods, users are encouraged to explore FTCLIB on GitHub.
-
-## Getting Started
-
-To begin leveraging HydraulicLib in your robotics projects, simply install the library and explore the comprehensive documentation provided. With its intuitive interface and robust functionality, HydraulicLib aims to simplify the process of robotics programming, enabling teams to focus on innovation and problem-solving.
