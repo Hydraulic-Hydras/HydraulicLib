@@ -33,8 +33,6 @@ public class HydraAngle {
         this.angle = convertAngleDouble(type);
     }
 
-    // Public Methods
-
     /**
      * Gets the angle value in the specified type.
      *
@@ -215,7 +213,7 @@ public class HydraAngle {
         return angle1.rotateBy(difference/2.0, direction);
     }
 
-    //INTERNAL METHODS
+    /** INTERNAL METHODS **/
     // input and output type should have the same numerical system
     public static double convertCoordinateSystem (double inputAngle, HydraAngleType inputType, HydraAngleType outputType) {
         //ensure input and output coordinate system not same- assumed different later on (bc of *-1)
@@ -224,9 +222,9 @@ public class HydraAngle {
         }
 
         if (isCartesian(inputType)) {
-            //+90 is to convert coordinate systems
-            //wrapAngle is to make sure within bounds of numerical system
-            //*-1 or 360- is to flip direction (coordinate system change always causes positive to flip between CW and CCW)
+            // +90 is to convert coordinate systems
+            // WrapAngle is to make sure within bounds of numerical system
+            // *-1 or 360- is to flip direction (coordinate system change always causes positive to flip between CW and CCW)
             if (isZeroTo360(inputType)) {
                 return 360 - wrapAngle(inputAngle - 90, outputType); //flipped plus to minus (correct with minus)
             }
@@ -243,7 +241,6 @@ public class HydraAngle {
         }
     }
 
-    //although this method currently is just a pass through, I think it may need to do more in the future (and it adds uniformity)
     public static double convertNumericalSystem (double inputAngle, HydraAngleType inputType, HydraAngleType outputType) {
         if (sameNumericalSystem(inputType, outputType)) {
             return inputAngle; //for uniformity
@@ -281,8 +278,8 @@ public class HydraAngle {
         return HydraAngleDirection.COUNTER_CLOCKWISE;
     }
 
-    //returns an angle between max and min, assuming a coordinate system starting at min and wrapping back to max
-    //assumes min < max AND min <= 0
+    // returns an angle between max and min, assuming a coordinate system starting at min and wrapping back to max
+    // Assumes min < max AND min <= 0
     public static double wrapAngle(double angle, double min, double max) {
         angle = mod(angle, range(min, max));
         if (angle > max) { //won't be < min bc of second assumption
@@ -291,7 +288,7 @@ public class HydraAngle {
         return angle;
     }
 
-    //shortcut for AngleType instead of min and max bounds
+    // Shortcut for AngleType instead of min and max bounds
     public static double wrapAngle(double angle, HydraAngleType outputAngleType) {
         if (isZeroTo360(outputAngleType)) {
             return wrapAngle(angle, 0, 360);
@@ -300,13 +297,13 @@ public class HydraAngle {
         }
     }
 
-    //returns the range between two numbers (ex. -180, 180 returns 360)
+    // Returns the range between two numbers (ex. -180, 180 returns 360)
     public static double range (double num1, double num2) {
         return Math.abs(num1-num2);
     }
 
-    //returns python version of n % m (n is dividend, m is divisor)
-    //python % never returns negative numbers, but Java % does
+    // Returns python version of n % m (n is dividend, m is divisor)
+    // Python % never returns negative numbers, but Java % does
     public static double mod (double n, double m) {
         return (((n % m) + m) % m);
     }

@@ -4,5 +4,9 @@ package com.hydraulichydras.hydralib;
  * Enumeration representing the direction of rotation.
  */
 public enum HydraAngleDirection {
-    CLOCKWISE, COUNTER_CLOCKWISE
+    /** Represents clockwise rotation direction. */
+    CLOCKWISE,
+
+    /** Represents counterclockwise rotation direction. */
+    COUNTER_CLOCKWISE
 }
