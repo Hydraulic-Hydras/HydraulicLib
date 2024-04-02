@@ -44,28 +44,3 @@ Feel free to raise issues, submit pull requests, share ideas or hit me up on dis
 Username: tea7003
 
 Happy coding! 
-
-## Overview
-
-HydraulicLib encompasses a range of classes tailored to various aspects of robotic programming, including kinematics, mathematical utilities, command sequences, and motion control.
-
-### Util
-The Util module serves as the foundational component of HydraulicLib, featuring the versatile `Contraption` class. This class can be seamlessly integrated into hardware classes to extend functionality, facilitating the implementation of simple 'init' and 'loop' methods.
-
-### Path
-Path introduces a novel class system developed through extensive research into trajectories and motion profiled movements. Its primary objective is to empower teams in creating customized movement patterns utilizing command sequences.
-
-### Motion
-Motion comprises classes dedicated to implementing motion profiled movement, with a focus on contraptions such as motion profiled DcMotors, ensuring smooth and precise robotic motion.
-
-### Kinematics
-Kinematics houses essential mathematical functions utilized in Odometry pods. Additionally, it is poised to include kinematics for Mecanum, tank, and Swerve (differential and Coaxial) drive systems in future updates.
-
-### Input
-Input serves as the central repository for gamepad input, providing a convenient interface for referencing all gamepad buttons within the library.
-
-### Geometry
-Geometry encompasses fundamental mathematical operations utilized across various modules within HydraulicLib, serving as the cornerstone for complex robotic computations.
-
-### Command
-Command houses an array of CommandSequences and functions tailored for constructing robot paths. These commands are designed to be used in conjunction with trajectories, providing teams with a flexible framework for executing complex maneuvers. For alternative methods, users are encouraged to explore FTCLIB on GitHub.
