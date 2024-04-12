@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Objects;
 
 /**
- * Class for reading inputs from a Hydra PS controller.
+ * Class for reading inputs from a PS controller.
  */
 public class HydraPSController {
 

@@ -1,7 +1,5 @@
 package com.hydraulichydras.hydralib;
 
-import android.hardware.SensorEvent;
-
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import java.util.Map;

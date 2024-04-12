@@ -12,10 +12,10 @@ public class HydraWaitCommand extends HydraCommandFoundation {
     // Timer to track the elapsed time
     protected Timer timer;
 
-    // Constructor to initialize the wait command with a specified duration in milliseconds
-    public HydraWaitCommand(long millis) {
-        timer = new Timer(millis, TimeUnit.MILLISECONDS); // Initialize the timer with the specified duration
-        setName(name + ":" + millis + " milliseconds"); // Set the command name including the duration
+    // Constructor to initialize the wait command with a specified duration in seconds
+    public HydraWaitCommand(long seconds) {
+        timer = new Timer(seconds, TimeUnit.SECONDS); // Initialize the timer with the specified duration
+        setName(name + ":" + seconds + " seconds"); // Set the command name including the duration
     }
 
     // Initializes the command by starting the timer

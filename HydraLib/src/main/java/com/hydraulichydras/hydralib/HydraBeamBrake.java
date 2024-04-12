@@ -52,7 +52,7 @@ public class HydraBeamBrake implements HydraSensor {
     @Override
     public void displayInfo() {
         System.out.println("Sensor: " + name);
-        System.out.println("Beam Broken: " + sensor.getState());
+        System.out.println("Beam Broken: " + getState());
     }
 
     /**

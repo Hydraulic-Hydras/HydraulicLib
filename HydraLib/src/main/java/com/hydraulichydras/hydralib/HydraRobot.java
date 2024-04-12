@@ -12,21 +12,14 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
  * You may find it helpful to extend this class to create your own "hardware robot" class.
  * You can extend separate mechanisms with the "HydraContraption" class and put them inside here too.
  */
-public class HydraRobot {
+public abstract class HydraRobot {
 
     /**
-     * HardwareMap circumstance for a Robot class.
+     * Initiates the robot's hardware by obtaining and storing references to the robot configuration.
+     * </p>
+     * @param hardwareMap robot's hardware map
+     * @param telemetry robot's telemetry display.
      */
-    protected HardwareMap hardwareMap;
-
-    /**
-     * Telemetry circumstance for a Robot class.
-     */
-    protected Telemetry telemetry;
-
-    public void initialize(HardwareMap hardwareMap, Telemetry telemetry) {
-        this.hardwareMap = hardwareMap;
-        this.telemetry = telemetry;
-    }
+    public abstract void initialize(HardwareMap hardwareMap, Telemetry telemetry);
 
 }

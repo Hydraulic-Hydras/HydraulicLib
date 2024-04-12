@@ -40,13 +40,10 @@ public class HydraPotentiometer implements HydraSensor {
     @Override
     public void update() {
         currentVoltage = analogInput.getVoltage();
-
         // Read the voltage from the potentiometer
         double voltage = analogInput.getVoltage();
         // Convert voltage to position in degrees
         position = ((voltage / 5.0) * 360.0) % 360;
-        // Convert degrees to radians
-        double positionRadians = Math.toRadians(position);
     }
 
     /**

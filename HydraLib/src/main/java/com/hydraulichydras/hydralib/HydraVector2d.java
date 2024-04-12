@@ -23,6 +23,7 @@ public class HydraVector2d {
      */
     public HydraVector2d() {
         this(0.0, 0.0);
+        this.fixFloatingPointErrors();
     }
 
     /**
@@ -34,6 +35,7 @@ public class HydraVector2d {
     public HydraVector2d(double x, double y) {
         this.x = x;
         this.y = y;
+        this.fixFloatingPointErrors();
     }
 
     /**
