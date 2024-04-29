@@ -2,6 +2,8 @@
   <img src="https://github.com/Tea505/HydraulicLib/blob/master/HydraLib/Hydraulic%20Hydras.png">
 </p>
 
+### DISCONTINUED AS OF NOW - 4/29/2024
+
 ## Hydraulic Lib 💚💙🖤
 Welcome to HydraulicLib, a versatile and comprehensive library tailored to simplify the journey of robotics programming, whether you're an experienced developer or just starting out. Our mission is to provide a robust yet accessible toolkit that empowers programmers to tackle complex challenges with confidence.
 
